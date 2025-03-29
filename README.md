@@ -2,7 +2,7 @@
 
 Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time series model, enriched with weather data to explore how temperature, precipitation, and visibility impact rider behavior.
 
-<img src="https://raw.githubusercontent.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/main/sawyer-bengtson-tnv84LOjes4-unsplash.jpg" width="500" height="300"/>
+<img src="https://raw.githubusercontent.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/main/sawyer-bengtson-tnv84LOjes4-unsplash.jpg" width="600" height="300"/>
 
 ![Python](https://img.shields.io/badge/Python-Prophet-blue?logo=python)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
