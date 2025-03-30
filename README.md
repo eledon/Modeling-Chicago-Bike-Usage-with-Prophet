@@ -94,25 +94,27 @@ We compare two time series models — **SARIMA** and **Prophet** — and evaluat
 
 - EDA confirmed that **casual users ride more on weekends**, while **members ride more on weekdays**.
 - A two-sample t-test showed these usage patterns are **statistically significant**.
-- STL decomposition revealed clear **seasonality and trends** in both groups.
-- Prophet outperformed SARIMA in accuracy and diagnostic consistency.
+- STL decomposition revealed clear **seasonality and long-term trends**.
+- Prophet outperformed SARIMA across all accuracy metrics and had well-behaved residuals.
 
-| Model                    | RMSE     | MAE      | MAPE     | Notes                            |
-|-------------------------|----------|----------|----------|----------------------------------|
-| SARIMA (Members)        | 5541.72  | 4670.92  | 104.67%  | High error, poor generalization |
-| Prophet (Members)       | 1111.40  | 865.89   | 15.72%   | ✅ Low error, well-calibrated     |
-| Prophet (Casual Users)  | 1228.95  | 941.38   | 46.04%   | Strong performance overall       |
+| Model                    | RMSE     | MAE      | MAPE     | Relative MAE | Notes                            |
+|-------------------------|----------|----------|----------|---------------|----------------------------------|
+| SARIMA (Members)        | 5541.72  | 4670.92  | 104.67%  | 0.45          | High error, poor generalization |
+| Prophet (Members)       | 1111.40  | 865.89   | 15.72%   | 0.08          | ✅ Best performance overall       |
+| Prophet (Casual Users)  | 1228.95  | 941.38   | 46.04%   | 0.16          | Strong performance               |
+
+---
 
 ### 📈 Forecast Plots
 
-<p align="center">
-  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Member_forecast.jpg" width="650" alt="Member Forecast">
+<p align="left">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Member_forecast.jpg" width="540" alt="Member Forecast">
   <br>
   <em>Figure: Member ride forecast (actual vs predicted with 95% CI)</em>
 </p>
 
-<p align="center">
-  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Casual_forecast.jpg" width="650" alt="Casual Forecast">
+<p align="left">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Casual_forecast.jpg" width="540" alt="Casual Forecast">
   <br>
   <em>Figure: Casual ride forecast (actual vs predicted with 95% CI)</em>
 </p>
