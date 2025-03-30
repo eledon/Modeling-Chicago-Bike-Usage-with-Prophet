@@ -106,13 +106,13 @@ We compare two time series models — **SARIMA** and **Prophet** — and evaluat
 ### 📈 Forecast Plots
 
 <p align="center">
-  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Member_forecast.jpg" width="450" alt="Member Forecast">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Member_forecast.jpg" width="650" alt="Member Forecast">
   <br>
   <em>Figure: Member ride forecast (actual vs predicted with 95% CI)</em>
 </p>
 
 <p align="center">
-  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Casual_forecast.jpg" width="450" alt="Casual Forecast">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Casual_forecast.jpg" width="650" alt="Casual Forecast">
   <br>
   <em>Figure: Casual ride forecast (actual vs predicted with 95% CI)</em>
 </p>
