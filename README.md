@@ -1,6 +1,6 @@
 # 🔄 Modeling Chicago Bike Usage with Prophet
 
-Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time series model, enriched with weather data to explore how temperature, precipitation, and visibility impact rider behavior.
+Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time series model, enhanced with weather data and holidays to forecast demand and understand how rider behavior varies between members and casual users.
 
 <img src="https://raw.githubusercontent.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/main/sawyer-bengtson-tnv84LOjes4-unsplash.jpg" width="600" height="300"/>
 
@@ -26,75 +26,96 @@ Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time s
 
 ## 🧭 Overview
 
-This project analyzes and models **daily Divvy bike usage in Chicago**, incorporating weather features to better understand rider behavior. Using Facebook Prophet with external regressors, the model captures seasonal and holiday trends and evaluates predictive performance using residual diagnostics.
+This project analyzes and forecasts **daily Divvy bike usage in Chicago**, focusing separately on **members** and **casual users**. We examine how usage varies across weekdays, weekends, holidays, and weather conditions.  
+We compare two time series models — **SARIMA** and **Prophet** — and evaluate which best captures the underlying structure and future trends in ride volume.
 
 ---
 
 ## 🧪 Technologies
 
 - **Language:** Python
-- **Libraries:** `prophet`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn`, `statsmodels`
-- **Models:** Prophet with additive & multiplicative seasonalities and weather covariates
+- **Libraries:** `prophet`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn`, `statsmodels`, `pmdarima`
+- **Models:** SARIMA (baseline), Prophet with holiday and weather regressors
 
 ---
 
 ## ❓ Research Questions
 
-- How do temperature, precipitation, and visibility affect daily bike usage?
-- Are weekends and holidays associated with higher or lower ride volumes?
-- Can we identify consistent seasonal patterns in bike-sharing activity?
-- Does the Prophet model adequately capture these dynamics?
-- What is the typical range of prediction error (MAE, RMSE, MAPE)?
+### Exploratory (EDA):
+- How do riding behaviors differ between members and casual users?
+- Are there consistent seasonal and weekly usage patterns?
+- Do weather and holidays significantly affect ride volume?
+
+### Predictive (Modeling):
+- Can we accurately forecast daily bike rides for each rider group?
+- Which external factors improve prediction accuracy?
+- How does Prophet perform compared to SARIMA?
 
 ---
 
 ## 📊 Dataset
 
-- **Divvy Bike Data:** [Divvy System Data](https://divvybikes.com/system-data)
-- **Weather Data:** [Visual Crossing Weather API](https://www.visualcrossing.com/resources/documentation/weather-data/getting-started-with-weather-data-services/)
-- **Frequency:** Daily
-- **Time Frame:** 2023–2024
-- **Variables:** 
-  - Target: Daily casual and member rides
+- **Divvy Trip Data:** [Divvy System Data](https://divvybikes.com/system-data)  
+- **Weather Data:** [Visual Crossing](https://www.visualcrossing.com/resources/documentation/weather-data/getting-started-with-weather-data-services/)  
+- **Holiday Data:** Manually created U.S. holiday list  
+- **Time Frame:** January 2023 – November 2024  
+- **Features:**
+  - Target: Daily member and casual rides
   - Regressors: `feelslike`, `cloudcover`, `precipcover`, `snowdepth`, `visibility`
 
 ---
 
 ## 🧠 Methodology
 
-### 1. Data Preparation
-- Merging bike data with daily weather observations
-- Missing value handling and alignment
-- Train/test split for final 30-day evaluation
+### 1. Exploratory Data Analysis
+- Plots by day of week, season, and user type
+- Histogram & Q-Q plots of ride distribution
+- Statistical tests (t-test, Ljung-Box, ADF)
 
-### 2. Exploratory Analysis
-- Time series plots, histogram, Q-Q plot, rolling statistics
-- Visual analysis of variance and seasonality
+### 2. Baseline Model: SARIMA
+- Fitted using `auto_arima()`
+- Weekly seasonality (m=7)
+- Evaluated using MAE, RMSE, MAPE
 
-### 3. Model Building with Prophet
-- Regressors: `feelslike`, `cloudcover`, `precipcover`, `snowdepth`, `visibility`
-- Tuned parameters: `changepoint_prior_scale`, `seasonality_prior_scale`
-- Custom weekly seasonality added (Fourier order = 5 or 7)
+### 3. Prophet Modeling
+- Added weather regressors and holidays
+- Tuned changepoint and seasonality priors
+- Custom weekly seasonality (Fourier order = 5)
+- Separate models for members and casuals
 
-### 4. Diagnostics and Evaluation
-- ACF & PACF of residuals
-- Ljung-Box test for autocorrelation
-- One-sample t-test for residual mean = 0
-- Metrics: MAE, RMSE, MAPE
+### 4. Residual Diagnostics
+- ACF, PACF, Ljung-Box (autocorrelation)
+- One-sample t-test (bias)
+- Residual plots and component inspection
 
 ---
 
 ## 📊 Results
 
-| Model                    | RMSE     | MAE      | MAPE    | Notes                          |
-|-------------------------|----------|----------|---------|--------------------------------|
-| Prophet (tuned)         | 1228.95  | 941.38   | 46.04%  | ✅ Best-performing configuration |
+- EDA confirmed that **casual users ride more on weekends**, while **members ride more on weekdays**.
+- A two-sample t-test showed these usage patterns are **statistically significant**.
+- STL decomposition revealed clear **seasonality and trends** in both groups.
+- Prophet outperformed SARIMA in accuracy and diagnostic consistency.
 
-<p align="left">
-  <img src="forecast_plot.png" width="600" alt="Forecast Plot">
+| Model                    | RMSE     | MAE      | MAPE     | Notes                            |
+|-------------------------|----------|----------|----------|----------------------------------|
+| SARIMA (Members)        | 5541.72  | 4670.92  | 104.67%  | High error, poor generalization |
+| Prophet (Members)       | 1111.40  | 865.89   | 15.72%   | ✅ Low error, well-calibrated     |
+| Prophet (Casual Users)  | 1228.95  | 941.38   | 46.04%   | Strong performance overall       |
+
+### 📈 Forecast Plots
+
+<p align="center">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Member_forecast.jpg" width="450" alt="Member Forecast">
+  <br>
+  <em>Figure: Member ride forecast (actual vs predicted with 95% CI)</em>
 </p>
 
-<p align="center"><em>Figure: Actual vs Predicted bike rides with 95% confidence interval</em></p>
+<p align="center">
+  <img src="https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Casual_forecast.jpg" width="450" alt="Casual Forecast">
+  <br>
+  <em>Figure: Casual ride forecast (actual vs predicted with 95% CI)</em>
+</p>
 
 ---
 
@@ -103,4 +124,4 @@ This project analyzes and models **daily Divvy bike usage in Chicago**, incorpor
 To run this project locally:
 
 ```bash
-pip install prophet pandas matplotlib seaborn scikit-learn statsmodels
+pip install prophet pandas matplotlib seaborn scikit-learn statsmodels pmdarima
