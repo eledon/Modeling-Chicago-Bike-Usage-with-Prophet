@@ -1,8 +1,11 @@
+readme_text = """
 # 🔄 Modeling Chicago Bike Usage with Prophet
 
 Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time series model, enhanced with weather data and holidays to forecast demand and understand how rider behavior varies between members and casual users.
 
 <img src="https://raw.githubusercontent.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/main/sawyer-bengtson-tnv84LOjes4-unsplash.jpg" width="600" height="300"/>
+
+[📘 View Full Report (Final_Report.ipynb)](https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Final_Report.ipynb)
 
 ![Python](https://img.shields.io/badge/Python-Prophet-blue?logo=python)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
@@ -27,15 +30,15 @@ Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time s
 ## 🧭 Overview
 
 This project analyzes and forecasts **daily Divvy bike usage in Chicago**, focusing separately on **members** and **casual users**. We examine how usage varies across weekdays, weekends, holidays, and weather conditions.  
-We compare two time series models — **SARIMA** and **Prophet** — and evaluate which best captures the underlying structure and future trends in ride volume.
+We compare two time series models — **SARIMA** and **Prophet** — and evaluate which best captures the underlying structure and future trends in ride volume. The model forecasts the final month in the dataset — **November 2024** — as an out-of-sample period.
 
 ---
 
 ## 🧪 Technologies
 
-- **Language:** Python
-- **Libraries:** `prophet`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn`, `statsmodels`, `pmdarima`
-- **Models:** SARIMA (baseline), Prophet with holiday and weather regressors
+- **Language:** Python  
+- **Libraries:** `prophet`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn`, `statsmodels`, `pmdarima`  
+- **Models:** SARIMA (baseline), Prophet with holiday and weather regressors  
 
 ---
 
@@ -60,48 +63,50 @@ We compare two time series models — **SARIMA** and **Prophet** — and evaluat
 - **Holiday Data:** Manually created U.S. holiday list  
 - **Time Frame:** January 2023 – November 2024  
 - **Features:**
-  - Target: Daily member and casual rides
-  - Regressors: `feelslike`, `cloudcover`, `precipcover`, `snowdepth`, `visibility`
+  - Target: Daily member and casual rides  
+  - Regressors: `feelslike`, `cloudcover`, `precipcover`, `snowdepth`, `visibility`  
 
 ---
 
 ## 🧠 Methodology
 
 ### 1. Exploratory Data Analysis
-- Plots by day of week, season, and user type
-- Histogram & Q-Q plots of ride distribution
-- Statistical tests (t-test, Ljung-Box, ADF)
+- Plots by day of week, season, and user type  
+- Histogram & Q-Q plots of ride distribution  
+- Statistical tests including t-tests, Ljung-Box test (for autocorrelation), and the ADF test (for stationarity)
 
 ### 2. Baseline Model: SARIMA
-- Fitted using `auto_arima()`
-- Weekly seasonality (m=7)
-- Evaluated using MAE, RMSE, MAPE
+We used SARIMA as a benchmark model to capture seasonality and short-term autocorrelation in the daily ride data. The model was fitted using `auto_arima()` with a weekly seasonal period (m = 7), as day-of-week patterns were clearly observed in the EDA. The best parameters were automatically selected based on AIC.
 
 ### 3. Prophet Modeling
-- Added weather regressors and holidays
-- Tuned changepoint and seasonality priors
-- Custom weekly seasonality (Fourier order = 5)
-- Separate models for members and casuals
+We selected Prophet due to its strengths in modeling seasonal trends, holidays, and incorporating external regressors. We added U.S. holidays and weather-based features as additional regressors. The weekly seasonality component was fine-tuned with a Fourier order of 5, and changepoint and seasonality priors were adjusted to optimize fit.
 
-### 4. Residual Diagnostics
-- ACF, PACF, Ljung-Box (autocorrelation)
-- One-sample t-test (bias)
-- Residual plots and component inspection
+### 4. Residual Diagnostics and Model Evaluation
+For each model, we performed:
+- Residual autocorrelation checks (ACF, PACF)
+- Ljung-Box test to assess white noise
+- One-sample t-test for bias detection
+- Evaluation of residual distribution shape (normality, skewness, kurtosis)
 
 ---
 
 ## 📊 Results
 
-- EDA confirmed that **casual users ride more on weekends**, while **members ride more on weekdays**.
-- A two-sample t-test showed these usage patterns are **statistically significant**.
-- STL decomposition revealed clear **seasonality and long-term trends**.
-- Prophet outperformed SARIMA across all accuracy metrics and had well-behaved residuals.
+### 📍 Forecasting Accuracy
 
 | Model                    | RMSE     | MAE      | MAPE     | Relative MAE | Notes                            |
 |-------------------------|----------|----------|----------|---------------|----------------------------------|
-| SARIMA (Members)        | 5541.72  | 4670.92  | 104.67%  | 0.45          | High error, poor generalization |
-| Prophet (Members)       | 1111.40  | 865.89   | 15.72%   | 0.08          | ✅ Best performance overall       |
-| Prophet (Casual Users)  | 1228.95  | 941.38   | 46.04%   | 0.16          | Strong performance               |
+| **SARIMA (Members)**    | 5541.72  | 4670.92  | 104.67%  | 0.45          | High error, poor generalization |
+| **Prophet (Members)**   | 1111.40  | 865.89   | 15.72%   | 0.08          | ✅ Best performance overall       |
+| **Prophet (Casual Users)** | 1193.06  | 974.49   | 46.81%   | 0.16          | Good absolute accuracy, high MAPE |
+
+### 📌 Interpretation of Metrics
+- **MAE (Mean Absolute Error)**: Average absolute difference between predicted and actual values.  
+- **RMSE (Root Mean Squared Error)**: Like MAE but penalizes larger errors more.  
+- **MAPE (Mean Absolute Percentage Error)**: Shows average error as a % of actual rides — sensitive to low-volume days.  
+- **Relative MAE**: Calculated as MAE divided by the mean of actual values. This gives a normalized error relative to average ride volume.
+
+> Prophet outperformed SARIMA significantly for both rider types, especially for members, with far lower error metrics and better-calibrated residuals. MAPE was higher for casual users due to the unpredictability of their rides on holidays and weekends, but absolute error remained low.
 
 ---
 
@@ -118,12 +123,4 @@ We compare two time series models — **SARIMA** and **Prophet** — and evaluat
   <br>
   <em>Figure: Casual ride forecast (actual vs predicted with 95% CI)</em>
 </p>
-
----
-
-## ⚙️ Getting Started
-
-To run this project locally:
-
-```bash
-pip install prophet pandas matplotlib seaborn scikit-learn statsmodels pmdarima
+"""
