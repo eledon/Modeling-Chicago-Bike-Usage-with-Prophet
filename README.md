@@ -1,4 +1,3 @@
-readme_text = """
 # 🔄 Modeling Chicago Bike Usage with Prophet
 
 Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time series model, enhanced with weather data and holidays to forecast demand and understand how rider behavior varies between members and casual users.
