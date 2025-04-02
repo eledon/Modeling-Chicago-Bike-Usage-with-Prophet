@@ -20,10 +20,6 @@ Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time s
 - [Dataset](#dataset)
 - [Methodology](#methodology)
 - [Results](#results)
-- [Getting Started](#getting-started)
-- [Next Steps](#next-steps)
-- [Contact](#contact)
-
 ---
 
 ## 🧭 Overview
