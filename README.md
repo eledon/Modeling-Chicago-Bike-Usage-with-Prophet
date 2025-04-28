@@ -7,7 +7,7 @@ Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time s
 [📘 View Full Report (Final_Report.ipynb)](https://github.com/eledon/Modeling-Chicago-Bike-Usage-with-Prophet/blob/main/Final_Report.ipynb)
 
 ![Python](https://img.shields.io/badge/Python-Prophet-blue?logo=python)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![Status](https://img.shields.io/badge/Status-In progress-brightgreen)
 ![Model](https://img.shields.io/badge/Model-Prophet%20with%20Regressors-yellowgreen)
 ![Data](https://img.shields.io/badge/Data-Divvy%20%2B%20Weather-orange)
 
@@ -25,7 +25,7 @@ Modeling daily Divvy bike ride volume in Chicago using Facebook's Prophet time s
 ## 🧭 Overview
 
 This project analyzes and forecasts **daily Divvy bike usage in Chicago**, focusing separately on **members** and **casual users**. We examine how usage varies across weekdays, weekends, holidays, and weather conditions.  
-We compare two time series models — **SARIMA** and **Prophet** — and evaluate which best captures the underlying structure and future trends in ride volume. The model forecasts the final month in the dataset — **November 2024** — as an out-of-sample period.
+We compare two time series models — **SARIMA** and **Prophet** - and evaluate which best captures the underlying structure and future trends in ride volume. The model forecasts the final month in the dataset - **November 2024** - as an out-of-sample period.
 
 ---
 
@@ -89,11 +89,11 @@ For each model, we performed:
 
 ### 📍 Forecasting Accuracy
 
-| Model                    | RMSE     | MAE      | MAPE     | Relative MAE | Notes                            |
-|-------------------------|----------|----------|----------|---------------|----------------------------------|
-| **SARIMA (Members)**    | 5541.72  | 4670.92  | 104.67%  | 0.45          | High error, poor generalization |
-| **Prophet (Members)**   | 1111.40  | 865.89   | 15.72%   | 0.08          | ✅ Best performance overall       |
-| **Prophet (Casual Users)** | 1193.06  | 974.49   | 46.81%   | 0.16          | Good absolute accuracy, high MAPE |
+| Model                    | RMSE     | MAE      |  Relative MAE | Notes                            |
+|-------------------------|----------|----------|---------------|----------------------------------|
+| **SARIMA (Members)**    | 5541.72  | 4670.92  | 0.45          | High error, poor generalization |
+| **Prophet (Members)**   | 1111.40  | 865.89   | 0.08          | ✅ Best performance overall       |
+| **Prophet (Casual Users)** | 1193.06  | 974.49   |  0.16          | Good absolute accuracy, high MAPE |
 
 ### 📌 Interpretation of Metrics
 - **MAE (Mean Absolute Error)**: Average absolute difference between predicted and actual values.  
@@ -101,7 +101,7 @@ For each model, we performed:
 - **MAPE (Mean Absolute Percentage Error)**: Shows average error as a % of actual rides — sensitive to low-volume days.  
 - **Relative MAE**: Calculated as MAE divided by the mean of actual values. This gives a normalized error relative to average ride volume.
 
-> Prophet outperformed SARIMA significantly for both rider types, especially for members, with far lower error metrics and better-calibrated residuals. MAPE was higher for casual users due to the unpredictability of their rides on holidays and weekends, but absolute error remained low.
+> Prophet outperformed SARIMA significantly for both rider types, especially for members, with far lower error metrics and better-calibrated residuals. MAPE was higher for casual users due to the unpredictability of their rides on holidays and weekends, but absolute error remained low. Current model status: work in progress.
 
 ---
 
