@@ -56,7 +56,7 @@ We compare two time series models — **SARIMA** and **Prophet** - and evaluate 
 - **Divvy Trip Data:** [Divvy System Data](https://divvybikes.com/system-data)  
 - **Weather Data:** [Visual Crossing](https://www.visualcrossing.com/resources/documentation/weather-data/getting-started-with-weather-data-services/)  
 - **Holiday Data:** Manually created U.S. holiday list  
-- **Time Frame:** January 2023 – November 2024  
+- **Time Frame:** January 2023 - November 2024  
 - **Features:**
   - Target: Daily member and casual rides  
   - Regressors: `feelslike`, `cloudcover`, `precipcover`, `snowdepth`, `visibility`  
